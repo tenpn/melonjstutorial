@@ -72,7 +72,8 @@ var PlayScreen = me.ScreenObject.extend(
 
    onResetEvent: function()
 	{	
-      // stuff to reset on state change
+	    // load a level
+	    me.levelDirector.loadLevel("area01");
 	},
 	
 	
@@ -81,7 +82,7 @@ var PlayScreen = me.ScreenObject.extend(
 		 action to perform when game is finished (state change)
 		
 		---	*/
-	onDestroyEvent: function()
+    onDestroyEvent: function()
 	{
 	
    }
