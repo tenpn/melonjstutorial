@@ -8,7 +8,15 @@
  **/
 
 // game resources
-var g_resources= [];
+var g_resources= [{
+	name: "area01_level_tiles",
+	type: "image",
+	src: "data/area01_tileset/area01_level_tiles.png"
+    }, {
+	name: "area01",
+	type: "tmx",
+	src: "data/area01.tmx"
+    }];
 
 
 var jsApp	= 
