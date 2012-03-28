@@ -28,6 +28,7 @@ var PlayerEntity = me.ObjectEntity.extend({
 	init: function(x, y, settings) {
 	    this.parent(x, y, settings);
 	    this.setVelocity(3, 15); // walking, jumping speed
+	    this.updateColRect(8, 48, -1, 0);
 	    me.game.viewport.follow(this.pos, me.game.viewport.AXIS.BOTH);
 	},
 
