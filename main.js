@@ -28,7 +28,15 @@ var g_resources= [{
 	name:"area01_bkg1",
 	type:"image",
 	src: "data/area01_parallax/area01_bkg1.png"
-    }];
+    }, {
+	name: "spinning_coin_gold",
+	type: "image",
+	src: "data/sprite/spinning_coin_gold.png"
+	}, {
+	name: "wheelie_right",
+	type: "image",
+	src: "data/sprite/wheelie_right.png"
+	}];
 
 // player entitiy
 var PlayerEntity = me.ObjectEntity.extend({
@@ -65,6 +73,16 @@ var PlayerEntity = me.ObjectEntity.extend({
 	}
     });
 
+var CoinEntity = me.CollectableEntity.extend({
+	init: function(x, y, settings) {
+		this.parent(x, y, settings); 
+	},
+	
+	onCollision: function() {
+	
+	}
+});
+	
 var jsApp	= 
 {	
 	/* ---
