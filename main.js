@@ -36,6 +36,10 @@ var g_resources= [{
 	name: "wheelie_right",
 	type: "image",
 	src: "data/sprite/wheelie_right.png"
+    }, {
+	name: "32x32_font",
+	type: "image",
+	src: "data/sprite/32x32_font.png"
     }];
 
 // player entitiy
@@ -90,7 +94,9 @@ var CoinEntity = me.CollectableEntity.extend({
 	},
 	
 	onCollision: function() {
-	
+	    //me.game.HUD.updateItemValue("score", 250);
+	    this.collidable=false;
+	    me.game.remove(this);
 	}
 });
 
@@ -147,6 +153,32 @@ var EnemyEntity = me.ObjectEntity.extend({
 	}
     });
 	
+var ScoreObject = me.HUD_Item.extend({
+	init: function(x,y) {
+	    this.parent(x, y);
+	    this.font = new me.BitmapFont("32x32_font", 32);
+	},
+
+	draw: function(context, x, y){
+	    this.font.draw(
+		 context, this.value, this.pos.x + x, this.pos.y + y);
+	},
+    });
+
+var PlayScreen = me.ScreenObject.extend({
+	onResetEvent: function() {
+	    me.levelDirector.loadLevel("area01");
+	    me.game.addHUD(0, 430, 640, 60);
+	    me.game.HUD.addItem("score", new ScoreObject(620, 10));
+	    me.game.sort();
+	},
+
+	onDestroyEvent: function() {
+	    me.game.disableHUD(); 
+	}
+    });
+
+
 var jsApp	= 
 {	
 	/* ---
