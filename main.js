@@ -64,6 +64,17 @@ var PlayerEntity = me.ObjectEntity.extend({
 
 	    this.updateMovement();
 
+	    var res = me.game.collide(this);
+	    if (res) {
+		if (res.obj.type == me.game.ENEMY_OBJECT) {
+		    if ((res.y > 0) && this.jumping == false) {
+			this.forceJump();
+		    } else {
+			this.flicker(45);
+		    }
+		}
+	    }
+
 	    if (this.vel.x != 0 || this.vel.y != 0){
 		// update anim
 		this.parent(this);
@@ -82,6 +93,59 @@ var CoinEntity = me.CollectableEntity.extend({
 	
 	}
 });
+
+var EnemyEntity = me.ObjectEntity.extend({
+	init:function(x, y, settings) {
+	    // can define this in tiled, or here
+	    settings.image="wheelie_right";
+	    settings.spritewidth = 64;
+
+	    this.parent(x, y, settings);
+
+	    this.startX = x;
+	    this.endX = x + settings.width - settings.spritewidth;
+
+	    this.pos.x = x + settings.width - settings.spritewidth;
+	    this.walkLeft = true;
+
+	    this.setVelocity(4, 6);
+
+	    this.collidable = true;
+	    this.type = me.game.ENEMY_OBJECT;
+	},
+
+	// obj - other object
+	onCollision: function(res, obj) {
+	    // res.y > 0 means touched on the bottom
+	    if (this.alive && (res.y > 0) && obj.falling) {
+		this.flicker(45);
+	    }
+	},
+
+	update: function() {
+	    if (!this.visible)
+		return false;
+
+	    if (this.alive) {
+		if (this.walkLeft && this.pos.x <= this.startX) {
+		    this.walkLeft = false;
+		} else if (this.walkLeft == false && this.pos.x >= this.endX) {
+		    this.walkLeft = true;
+		}
+		this.doWalk(this.walkLeft);
+	    } else {
+		this.vel.x = 0;
+	    }
+
+	    this.updateMovement();
+
+	    if (this.vel.x != 0 || this.vel.y != 0) {
+		this.parent(this);
+		return true;
+	    }
+	    return false;
+	}
+    });
 	
 var jsApp	= 
 {	
@@ -126,6 +190,7 @@ var jsApp	=
       
 		me.entityPool.add("mainPlayer", PlayerEntity);
 		me.entityPool.add("CoinEntity", CoinEntity);
+		me.entityPool.add("EnemyEntity", EnemyEntity);
 		
 		me.input.bindKey(me.input.KEY.LEFT, "left");
 		me.input.bindKey(me.input.KEY.RIGHT, "right");
