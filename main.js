@@ -32,11 +32,11 @@ var g_resources= [{
 	name: "spinning_coin_gold",
 	type: "image",
 	src: "data/sprite/spinning_coin_gold.png"
-	}, {
+    }, {
 	name: "wheelie_right",
 	type: "image",
 	src: "data/sprite/wheelie_right.png"
-	}];
+    }];
 
 // player entitiy
 var PlayerEntity = me.ObjectEntity.extend({
@@ -125,6 +125,7 @@ var jsApp	=
 		me.state.set(me.state.PLAY, new PlayScreen());
       
 		me.entityPool.add("mainPlayer", PlayerEntity);
+		me.entityPool.add("CoinEntity", CoinEntity);
 		
 		me.input.bindKey(me.input.KEY.LEFT, "left");
 		me.input.bindKey(me.input.KEY.RIGHT, "right");
