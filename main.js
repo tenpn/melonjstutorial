@@ -94,7 +94,9 @@ var CoinEntity = me.CollectableEntity.extend({
 	},
 	
 	onCollision: function() {
-	    //me.game.HUD.updateItemValue("score", 250);
+	    if (me.game.HUD != null){
+		me.game.HUD.updateItemValue("score", 250);
+	    }
 	    this.collidable=false;
 	    me.game.remove(this);
 	}
@@ -165,19 +167,6 @@ var ScoreObject = me.HUD_Item.extend({
 	},
     });
 
-var PlayScreen = me.ScreenObject.extend({
-	onResetEvent: function() {
-	    me.levelDirector.loadLevel("area01");
-	    me.game.addHUD(0, 430, 640, 60);
-	    me.game.HUD.addItem("score", new ScoreObject(620, 10));
-	    me.game.sort();
-	},
-
-	onDestroyEvent: function() {
-	    me.game.disableHUD(); 
-	}
-    });
-
 
 var jsApp	= 
 {	
@@ -235,27 +224,18 @@ var jsApp	=
 }; // jsApp
 
 /* the in game stuff*/
-var PlayScreen = me.ScreenObject.extend(
-{
-
-   onResetEvent: function()
-	{	
-	    // load a level
+var PlayScreen = me.ScreenObject.extend({
+	onResetEvent: function() {
 	    me.levelDirector.loadLevel("area01");
+	    me.game.addHUD(0, 430, 640, 60);
+	    me.game.HUD.addItem("score", new ScoreObject(620, 10));
+	    me.game.sort();
 	},
-	
-	
-	/* ---
-	
-		 action to perform when game is finished (state change)
-		
-		---	*/
-    onDestroyEvent: function()
-	{
-	
-   }
 
-});
+	onDestroyEvent: function() {
+	    me.game.disableHUD();
+	}
+    });
 
 
 //bootstrap :)
