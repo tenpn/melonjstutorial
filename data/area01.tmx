@@ -44,6 +44,30 @@
     <property name="spritewidth" value="64"/>
    </properties>
   </object>
+  <object name="CoinEntity" x="150" y="100" width="31" height="28">
+   <properties>
+    <property name="image" value="spinning_coin_gold"/>
+    <property name="spritewidth" value="32"/>
+   </properties>
+  </object>
+  <object name="CoinEntity" x="49" y="303" width="31" height="28">
+   <properties>
+    <property name="image" value="spinning_coin_gold"/>
+    <property name="spritewidth" value="32"/>
+   </properties>
+  </object>
+  <object name="CoinEntity" x="580" y="204" width="31" height="28">
+   <properties>
+    <property name="image" value="spinning_coin_gold"/>
+    <property name="spritewidth" value="32"/>
+   </properties>
+  </object>
+  <object name="CoinEntity" x="403" y="147" width="31" height="28">
+   <properties>
+    <property name="image" value="spinning_coin_gold"/>
+    <property name="spritewidth" value="32"/>
+   </properties>
+  </object>
  </objectgroup>
  <layer name="foreground" width="20" height="15">
   <data encoding="base64">
