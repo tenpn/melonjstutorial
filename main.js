@@ -40,6 +40,26 @@ var g_resources= [{
 	name: "32x32_font",
 	type: "image",
 	src: "data/sprite/32x32_font.png"
+    }, {
+	name: "cling",
+	type: "audio",
+	src: "data/audio/",
+	channel: 2
+    }, {
+	name: "stomp",
+	type: "audio", 
+	src: "data/audio/",
+	channel: 1
+    }, {
+	name: "jump",
+	type: "audio", 
+	src: "data/audio/",
+	channel: 1
+    }, {
+	name: "DST-InertExponent",
+	type: "audio", 
+	src: "data/audio/",
+	channel: 1
     }];
 
 // player entitiy
@@ -63,7 +83,9 @@ var PlayerEntity = me.ObjectEntity.extend({
 	    }
 
 	    if (me.input.isKeyPressed('jump')) {
-		this.doJump();
+		if (this.doJump()) {
+		    me.audio.play("jump");
+		}
 	    }
 
 	    this.updateMovement();
@@ -72,6 +94,7 @@ var PlayerEntity = me.ObjectEntity.extend({
 	    if (res) {
 		if (res.obj.type == me.game.ENEMY_OBJECT) {
 		    if ((res.y > 0) && this.jumping == false) {
+			me.audio.play("stomp");
 			this.forceJump();
 		    } else {
 			this.flicker(45);
@@ -99,6 +122,7 @@ var CoinEntity = me.CollectableEntity.extend({
 	    }
 	    this.collidable=false;
 	    me.game.remove(this);
+	    me.audio.play("cling");
 	}
 });
 
@@ -226,6 +250,7 @@ var jsApp	=
 /* the in game stuff*/
 var PlayScreen = me.ScreenObject.extend({
 	onResetEvent: function() {
+	    me.audio.playTrack("DST-InertExponent");
 	    me.levelDirector.loadLevel("area01");
 	    me.game.addHUD(0, 430, 640, 60);
 	    me.game.HUD.addItem("score", new ScoreObject(620, 10));
@@ -233,6 +258,7 @@ var PlayScreen = me.ScreenObject.extend({
 	},
 
 	onDestroyEvent: function() {
+	    me.audio.stopTrack();
 	    me.game.disableHUD();
 	}
     });
