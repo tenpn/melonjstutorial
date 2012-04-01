@@ -60,6 +60,10 @@ var g_resources= [{
 	type: "audio", 
 	src: "data/audio/",
 	channel: 1
+    }, {
+	name: "title_screen",
+	type: "image",
+	src: "data/GUI/title_screen.png"
     }];
 
 // player entitiy
@@ -191,6 +195,23 @@ var ScoreObject = me.HUD_Item.extend({
 	},
     });
 
+var TitleScreen = me.ScreenObject.extend({
+	init: function() {
+	    this.parent(true);
+	},
+
+	onResetEvent: function() {
+	},
+
+	update: function() {
+	},
+
+	draw: function(context) {
+	},
+
+	onDestroyEvent: function() {
+	}
+    });
 
 var jsApp	= 
 {	
