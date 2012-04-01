@@ -198,12 +198,46 @@ var ScoreObject = me.HUD_Item.extend({
 var TitleScreen = me.ScreenObject.extend({
 	init: function() {
 	    this.parent(true);
+
+	    this.title=null;
+	    this.scrollerfont = null;
+	    this.scrollertween = null;
+	    
+	    this.scroller = "A SMALL STEP-BY-STEP TUTORIAL FOR GAME CREATION WITH MELON JS            ";
+	    this.scrollerpos = 600;
 	},
 
 	onResetEvent: function() {
+	    if (this.title == null) {
+		this.title = me.loader.getImage("title_screen");
+		this.font = new me.BitmapFont("32x32_font", 32);
+		this.font.set("left");
+
+		this.scrollerfont = new me.BitmapFont("32x32_font", 32);
+		this.scrollerfont.set("left");
+	    }
+
+	    this.scrollover();
+	    
+	    me.input.bindKey(me.input.KEY.ENTER, "enter", true);
+	    me.audio.play("cling");
+	    
 	},
 
+	scrollover: function() {
+	    this.scrollerpos = 640;
+	    
+	    this.scrollertween = new me.Tween(this).to({scrollerpos: -2200},
+						       10000)
+	        .onComplete(this.scrollover.bind(this)).start();
+	},
+	    
+
 	update: function() {
+	    if(me.input.isKeyPressed('enter')) {
+		me.state.change(me.state.PLAY); 
+	    }
+	    return true;
 	},
 
 	draw: function(context) {
