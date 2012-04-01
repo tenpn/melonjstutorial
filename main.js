@@ -241,9 +241,15 @@ var TitleScreen = me.ScreenObject.extend({
 	},
 
 	draw: function(context) {
+	    context.drawImage(this.title, 0, 0);
+	    this.font.draw(context, "PRESS ENTER TO PLAY", 20, 240);
+	    this.scrollerfont.draw(context, this.scroller, this.scrollerpos, 440);
+	    this.font.draw(context, "TYPED BY 10PN", 85, 340);
 	},
 
 	onDestroyEvent: function() {
+	    me.input.unbindKey(me.input.KEY.ENTER);
+	    this.scrollertween.stop();
 	}
     });
 
@@ -286,7 +292,10 @@ var jsApp	=
 	loaded: function ()
 	{
 		// set the "Play/Ingame" Screen Object
+	        me.state.set(me.state.MENU, new TitleScreen());
 		me.state.set(me.state.PLAY, new PlayScreen());
+
+		me.state.transition("fade", "#FFFFFF", 250);
       
 		me.entityPool.add("mainPlayer", PlayerEntity);
 		me.entityPool.add("CoinEntity", CoinEntity);
@@ -297,7 +306,7 @@ var jsApp	=
 		me.input.bindKey(me.input.KEY.X, "jump", true);
 
 		// start the game 
-		me.state.change(me.state.PLAY);
+		me.state.change(me.state.MENU);
 	}
 
 }; // jsApp
